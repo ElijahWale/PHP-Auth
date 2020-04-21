@@ -1,43 +1,41 @@
 <?php include_once "lib/header.php";
+require_once('functions/alert.php');
+require_once('functions/user.php');
 
-//if token is taken
 
-if(!isset($_GET['token']) && !isset($_SESSION['token'])){
+//if user is not logged in and token is not set
+
+if(!is_User_LoggedIn() && !is_token_set()){
     $_SESSION['error'] ="you are not authorized to view that page";
     header("location:login.php");
 }
 
 ?>
 
-<!-- Message for Message Successful -->
-        <p>
-           <?php
-           if(isset($_SESSION['message']) &&  !empty($_SESSION['message'])){
-               echo "<span style='color:green'>" . $_SESSION["message"] ."<span>";
-               session_destroy();
-           }
-
-           ?>
-       </p>
+    
 <h3 class="text-center">Reset Password</h3>
 
-<p>Reset Password associated with your account: [email]</p>
+<p>Reset Password associated with your account:<?= $_SESSION['email'];?></p>
 <!-- update email address above as they enter it -->
 
 <form action="processreset.php" method="POST">
+
+    <!-- error message and success message begins -->
         <p>
            <?php
-           if(isset($_SESSION['error']) &&  !empty($_SESSION['error'])){
-               echo "<span style='color:red'>" . $_SESSION['error']. "</span>";
-               session_destroy();
-           }
+           error(); message();
 
            ?>
        </p>
+
+    <!-- error message and success message ends -->
+
+    <!-- when user is not loggedIn token is not set -->
+       <?php if(!is_User_LoggedIn()){ ?>
        <input
        
             <?php
-           if(isset($_SESSION['token'])){
+           if( is_token_set_in_session()){
                echo "value='" . $_SESSION["token"] . "'";
            }else{
                echo "value='" . $_GET['token'] . "'";
@@ -45,15 +43,15 @@ if(!isset($_GET['token']) && !isset($_SESSION['token'])){
 
            ?>
        
-       type="hidden" name="token" value="<?php echo $_GET['token']; ?>">
-
+       type="hidden" name="token">
+        <?php } ?>
     <p>
         <label>Email</label><br>
         <input 
         
             <?php
            if(isset($_SESSION['email'])){
-               echo "value=" . $_SESSION["email"];
+               echo "value=" . $_SESSION['email'];
            }
 
            ?>

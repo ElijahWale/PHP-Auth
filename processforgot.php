@@ -1,5 +1,6 @@
 <?php
 session_start();
+require_once('functions/alert.php');
 
 $errorCount = 0;
 // verifying the data validation
@@ -17,8 +18,9 @@ if($errorCount > 0){
         $session_error .= "s";
     }
     $session_error .=  " in your form submission";
-    $_SESSION["error"] = $session_error ;
+    set_alert('error',$session_error);
     header("location:forgot.php");
+
 
 // scan DATABASE
 }else{
@@ -48,7 +50,7 @@ if($errorCount > 0){
              */
             $subject ="Password Reset link";
             $message ="A password reset has been iniated from your account,if you did not initiate this reset,please 
-            ignore this message, otherwise visit:localhost/php/cvh/reset.php?token=" . $token;
+            ignore this message, otherwise visit:localhost/php/PHP-Auth/reset.php?token=" . $token;
             $headers = "From:no-reply@snh.org" ."\r\n".
             "CC:wale@snh.org";
             // check if token was saved before sending it 

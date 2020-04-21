@@ -1,7 +1,15 @@
-<?php include_once "lib/header.php";?>
+<?php include_once "lib/header.php"; 
+require_once('functions/alert.php');
+?>
 
-<div>
-    <div class="card border-light mt-3 mb-3">
+<?php
+    print_error();
+?>
+                
+<div class="container-card">
+    <!-- Displays error message when the email is incorrect -->
+                
+    <div class="card border-light mt-3 mb-3" style="width:900px">
         <div class="card-header text-center">
             <h3>Forgot Password</h3>
             <p>Provide the email address associated with your account</p>
@@ -9,15 +17,8 @@
         <div class="card-body">
 
             <form action="processforgot.php" method="POST">
-                <p>
-                    <?php
-                    if(isset($_SESSION['error']) &&  !empty($_SESSION['error'])){
-                        echo $_SESSION["error"];
-                        session_destroy();
-                    }
 
-                    ?>
-                </p>
+            
 
                 <p>
                     <label>Email</label><br>

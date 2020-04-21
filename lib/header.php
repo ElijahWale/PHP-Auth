@@ -10,26 +10,24 @@ session_start();
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/style.css">
 
     <title>CVH:Corona Virus Hospital </title>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="#navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-            <div class="navbar-nav ml-auto">
-                <a class="nav-item nav-link" href="index.php">Home |</a>
-                <?php if(!isset($_SESSION['loggedIn'])){?>
-                <a class="nav-item nav-link" href="login.php">Log In |</a>
-                <a class="nav-item nav-link" href="register.php">Register |</a>
-                <a class="nav-item nav-link" href="forgot.php">Forgot Password </a>
-                <?php }else{?>
-                <a class="nav-item nav-link" href="logout.php">Log Out</a>
-                <?php }?>
-            </div>
-        </div>
-    </nav>
+    <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
+        <h5 class="my-0 mr-md-auto font-weight-normal">CoronaVirus Hospital</h5>
+        <nav class="my-2 my-md-0 mr-md-3">
+            <a class="p-2 text-dark" href="index.php">Home</a>
+            <?php if(!isset($_SESSION['loggedIn'])){?>
+            <a class="p-2 text-dark" href="login.php">Log In</a>
+            <a class="btn btn-primary" href="register.php">Register</a>
+            <!-- <a class="p-2 text-dark" href="forgot.php">Forgot Password</a> -->
+            <?php }else{?>
+            <a class="p-2 text-dark" href="logout.php">Log Out</a>
+            <a class="p-2 text-dark" href="reset.php">Reset Password</a>
+            <?php }?>
+        </nav>
+        
+    </div>
     

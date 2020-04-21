@@ -1,27 +1,38 @@
 <?php 
 include_once "lib/header.php";
+require_once('functions/alert.php');
 
-if(isset($_SESSION['role']) && !empty($_SESSION['role'])){
-    header("location:admin/admindashboard.php");
+
+// Redirect the user to different designations
+
+if(isset($_SESSION['loggedIn']) && !empty($_SESSION['loggedIn'])){
+    switch($_SESSION['role']){
+        case "Patient":
+        header("location:patient.php");
+        break;
+
+        case "Medical Team(MT)":
+            header("location:mt.php");
+        break;
+        default:
+            header("logout.php");
+        break;
+
+    }
 }
+       
+?> 
 
-
-?>
-<div class="container">
+<div class="container-card">
    
-            <!-- Message for Registration Successful -->
-            <p>
-            <?php
-            if(isset($_SESSION['message']) &&  !empty($_SESSION['message'])){
-                echo "<span style='color:green'>" . $_SESSION["message"] ."<span>";
-                session_destroy();
-            }
-
-            ?>
-        </p>
+   
         
         
-        <div class="card border-light mt-3 mb-3">
+        <div class="card border-light mt-3 mb-3" style="width:600px">
+        <?php
+// <!-- Message for Registration Successful -->
+        print_error(); print_message();
+        ?>
             <div class="card-header text-center">
             <h2>Login Here</h2>
                 <p>All fields are required</p>
@@ -33,15 +44,7 @@ if(isset($_SESSION['role']) && !empty($_SESSION['role'])){
                 <form action="processlogin.php" method="POST">
 
                 
-                    <p>
-                        <?php
-                        if(isset($_SESSION['error']) &&  !empty($_SESSION['error'])){
-                            echo $_SESSION["error"];
-                            session_destroy();
-                        }
-
-                        ?>
-                    </p>
+                    
                     
                     <p>
                         <label>Email</label><br>
@@ -52,13 +55,13 @@ if(isset($_SESSION['role']) && !empty($_SESSION['role'])){
                             }
 
                         ?>
-                        type="text" name="email" placeholder="Email" >
+                        type="text" name="email" class="form-control"  placeholder="Email" >
                     </p><br>
                     <p>
                         <label>Password</label><br>
-                        <input type="password" name="password" placeholder="Password" >
+                        <input type="password" name="password" class="form-control" placeholder="Password" >
                     </p><br>
-                    <button type="submit" name="submit">login</button>
+                    <button type="submit" class="btn-block btn-lg btn-primary" name="submit">login</button>
                 </form>
 
             </div>

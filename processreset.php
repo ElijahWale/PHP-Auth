@@ -4,12 +4,15 @@ session_start();
 $errorCount = 0;
 // verifying the data validation
 
+if(!$_SESSION['loggedIn']){
+    $token = $_POST['token']!= "" ? $_POST['token'] :$errorCount++;
+    $_SESSION['token'] = $token;
+}
 
-$token = $_POST['token']!= "" ? $_POST['token'] :$errorCount++;
 $email = $_POST['email']!= "" ? $_POST['email'] :$errorCount++;
 $password = $_POST['password']!= "" ? $_POST['password'] :$errorCount++;
 
-$_SESSION['token'] = $token;
+
 $_SESSION['email'] =$email;
 
 if($errorCount > 0){
@@ -41,12 +44,18 @@ if($errorCount > 0){
         
         if($currentTokenFile == $email . ".json"){
 
-            $tokenContent = file_get_contents("db/users/".$currentTokenFile);
+            $tokenContent = file_get_contents("db/tokens/".$currentTokenFile);
             $tokenObject = json_decode($tokenContent);
             $tokenFromDB = $tokenObject->token;
 
-            if($tokenFromDB == $token){
+            if($_SESSION['loggedIn']){
+                $checkToken = true;
+            }else{
+                $checkToken = $tokenFromDB == $token;
+            }
 
+            if($checkToken){
+                
                 $allUsers = scandir("db/users");
                 $countAllUsers = count($allUsers);
             
@@ -63,28 +72,34 @@ if($errorCount > 0){
 
                         $userObject->password = password_hash($password, PASSWORD_DEFAULT);
 
-                        unlink("db/users/".$currentUser);//file delete,user data delete
+                        unlink("db/users/" . $currentUser);//file delete,user data delete
                         
                         file_put_contents("db/users/". $email . ".json", json_encode($userObject));
 
-                        $_SESSION['message'] = "Password Reset Successfully, you can now login";
+                      
 
                         /**
                          * INFORM USER OF PASSWORD RESET
                          */
                         $subject ="Password Reset Successful";
-                        $message ="Your account on cvh has just been updated, your password has changed. if you initiate the password change, please visit snh.org and reset your password immediately";
+                        $message ="Your account on cvh has just been updated, your password has changed. if you did not initiate the password change, please visit snh.org and reset your password immediately";
                         $headers = "From:no-reply@snh.org" ."\r\n".
                         "CC:wale@snh.org";
             
                         $try = mail($email,$subject,$message,$headers);
-
+                        
+                          if($try){
+                            $_SESSION['message'] = "Password Reset Successfully, you can now login";
+                          }else{   
+                            header("location:login.php");
+                            die();
+                          }
 
                          /**
                           * Inform user of password reset ends
                           */
-                        header("location:login.php");
-                        die();
+                          
+                        
                     }  
             
                 }
