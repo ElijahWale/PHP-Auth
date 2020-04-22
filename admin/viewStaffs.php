@@ -1,6 +1,9 @@
 
 <?php
 session_start();
+
+// if user session is not set
+
 if(!isset($_SESSION['loggedIn'])){
     header("location:login.php");
 }
