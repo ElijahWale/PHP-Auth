@@ -7,18 +7,26 @@ require_once('functions/alert.php');
 
 if(isset($_SESSION['loggedIn']) && !empty($_SESSION['loggedIn'])){
     switch($_SESSION['role']){
-        case "Patient":
-        header("location:patient.php");
-        break;
+        
 
         case "Medical Team(MT)":
             header("location:mt.php");
         break;
+        case "Super Admin":
+            header("location:admin/admindashboard.php");
+        break;
+
+        case "patient.php";
+        header("location:patient.php");
+        break;
+
         default:
             header("logout.php");
         break;
 
     }
+   
+   
 }
        
 ?> 

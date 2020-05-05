@@ -1,16 +1,18 @@
 <?php include_once "lib/header.php";
 require_once('functions/alert.php');
 
-if(!isset($_SESSION['loggedIn'])){
+if(!isset($_SESSION['loggedIn']) && empty($_SESSION['loggedIn'])){
     header("location:login.php");
 }
- ?>
+?>
  <a href="patient.php" class="btn btn-outline-primary mt-3 ml-2">Go Back</a>
 <div class="container-card">                        
                        
 
-        <!-- form for book appointment -->
+         <!-- form for book appointment -->
         <div class="card border-light mt-3 mb-3 " style="width:600px">
+
+        <!-- printing error and success message -->
                         <?php
                         print_error(); print_message();
 
@@ -48,7 +50,7 @@ if(!isset($_SESSION['loggedIn'])){
                         
                         <textarea name="initialComplaint" class="form-control" rows="3"></textarea>
                     </p><br>
-                    <input type="hidden" name="email" value="<?= $_SESSION['email']; ?>">
+                   
                     
                 
                     <button type="submit" class="btn-block btn-lg btn-primary" name="submit">Book Appointment</button>

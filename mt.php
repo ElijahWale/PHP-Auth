@@ -4,6 +4,9 @@
 if(!isset($_SESSION['loggedIn'])){
     header("location:login.php");
 }
+if (!($_SESSION["role"] == "Medical Team(MT)")){
+    header("location:index.php");
+}
 
 ?>
 
@@ -15,6 +18,7 @@ if(!isset($_SESSION['loggedIn'])){
        <div class="card-body">
     
             <div class="card-text"> 
+                <p><a href="patientTransaction.php"  class="btn btn-info">View Patient Transactions</a> </p>  
                 <p><a href="viewappointment.php"  class="btn btn-info">View all Appointments</a> </p>  
                 <p> YOU ARE NOW LOGGED IN AS USER <?php echo $_SESSION['loggedIn'];?></p><br>
                 <p>You role is as <?=  $_SESSION['role'];  ?></p><br>

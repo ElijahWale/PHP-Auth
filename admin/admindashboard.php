@@ -8,6 +8,7 @@ if(!isset($_SESSION['role'])){
 
 
 
+
 ?>
 
 <!DOCTYPE html>
@@ -62,6 +63,7 @@ if(!isset($_SESSION['role'])){
                         <a href="add_user.php" class="btn btn-outline-primary mb-2">Add New User</a>
                         <a href="viewStaffs.php" class="btn btn-outline-primary mb-2">View All Staffs</a>
                         <a href="viewPatients.php" class="btn btn-outline-primary mb-2">View All Patients</a>
+                        <a href="viewTransactions.php" class="btn btn-outline-primary mb-2">View All Transactions</a>
                     </div>
                     
                 </div> 

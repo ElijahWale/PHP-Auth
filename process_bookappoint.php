@@ -2,7 +2,7 @@
 session_start();
 
 
-
+$errors;
 // collecting data from the form and  data validation
 
 $dateAppointment = $_POST['dateAppointment']!= "" ? $_POST['dateAppointment'] : $errors = "Your date Appointment field is empty";
@@ -27,7 +27,7 @@ if($errors){
     $session_error =  $errors ;
         $_SESSION["error"] = $session_error ;
         header("location:bookappoint.php");
-    exit;
+    die();
 } else{
     // count all appoitnments
     $allAppointments= scandir("db/appointments");
@@ -48,13 +48,22 @@ if($errors){
 
      
     // store in the database
+    
+    
+    file_put_contents("db/appointments/" . $_SESSION['email'] . ".json", json_encode($userObject));
 
     
-    file_put_contents("db/appointments/" . $email . ".json", json_encode($userObject));
+    session_destroy($_SESSION['dateAppointment']); 
+    session_destroy($_SESSION['timeAppointment']);
+    session_destroy($_SESSION['department']);
+    session_destroy($_SESSION['natureComplaint']);
+    session_destroy($_SESSION['initialComplaint']);
+    
    
     $_SESSION["message"] = "Appointment booked with the Medical Team ";
     header("location:bookappoint.php");
-    
+
+
 
 }
 

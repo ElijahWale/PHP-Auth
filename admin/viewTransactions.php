@@ -41,10 +41,11 @@ if(!isset($_SESSION['loggedIn'])){
     <table class="table table-striped mt-4">
         <thead>
             <tr>
+                <th scope="col">s/n</th>
                 <th scope="col">Full Name</th>
-                <th scope="col">Designation</th>
                 <th scope="col">Email</th>
-                <th scope="col">Gender</th>
+                <th scope="col">Amount(#)</th>
+                <th scope="col">Status</th>
                
                 
                 
@@ -52,40 +53,33 @@ if(!isset($_SESSION['loggedIn'])){
             </tr>
         </thead>
         <?php
-            $allPatient = scandir("../db/users");
-            $countAllPatients = count($allPatient);
-
-        
-            for ($i = 2; $i < $countAllPatients; $i++){
-                $currentUser = $allPatient[$i];
-                $userString = file_get_contents("../db/users/".$currentUser);
-                $userObject = json_decode($userString);
-                $designationFromDB = $userObject->designation;
-                $fullName = $userObject->firstName . " ". $userObject->lastName;
-                $emailFromDB = $userObject->email; 
-                $genderFromDB = $userObject->gender;
-
-
-            //         // get Transactions file from db
-            //     $TransactionString = file_get_contents("../db/transactions/". $currentUser);
-            //     $TransactionObject = json_decode($TransactionString); 
-            //    $action= $TransactionObject->action;
-            //     $email     =  $TransactionObject-> email;
+            $allTransactions = scandir("../db/transactions/");
+            $countAllTransactions = count($allTransactions);
+            for($i=2; $i< $countAllTransactions; $i++){
+                      $currentTransaction = $allTransactions[$i];
+                      $TransactionString = file_get_contents("../db/transactions/". $currentTransaction);
+                      $TransactionObject = json_decode($TransactionString); 
+         $newUserId =  $TransactionObject->id;
+         $email     =  $TransactionObject-> email;
+          $amount          =  $TransactionObject-> Amount;
+           $action         =  $TransactionObject-> action;
+           $fullName =  $TransactionObject->fullName;
                
-                if($designationFromDB =="Patient"){
+               
                    
 
                 ?>
                 <tr>
+                    <td><?=  $newUserId;?></td>
                     <td><?= $fullName;?></td>
-                    <td><?= $designationFromDB;?></td>
-                    <td><?= $emailFromDB;?></td>
-                    <td><?= $genderFromDB;?></td>  
+                    <td><?= $email;?></td>
+                    <td><?= $amount;?></td>
+                    <td><?= $action;?></td>  
                     
                     
                 </tr>
         <?php
-                }
+                
                 
             }?>
                   

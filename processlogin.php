@@ -65,6 +65,9 @@ if($errorCount > 0){
     $_SESSION["error"] = "invalid Email or Password";
     header("location:login.php");
     die();
+
+    
+
 }
 
 ?>

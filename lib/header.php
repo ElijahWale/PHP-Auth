@@ -19,14 +19,22 @@ session_start();
         <h5 class="my-0 mr-md-auto font-weight-normal">CoronaVirus Hospital</h5>
         <nav class="my-2 my-md-0 mr-md-3">
             <a class="p-2 text-dark" href="index.php">Home</a>
+
             <?php if(!isset($_SESSION['loggedIn'])){?>
             <a class="p-2 text-dark" href="login.php">Log In</a>
+            <a class="p-2 text-dark" href="forgot.php">Forgot Password</a>
             <a class="btn btn-primary" href="register.php">Register</a>
-            <!-- <a class="p-2 text-dark" href="forgot.php">Forgot Password</a> -->
+           
             <?php }else{?>
+                
+                <a class="p-2 text-dark" href='#'>Dashboard</a>
             <a class="p-2 text-dark" href="logout.php">Log Out</a>
             <a class="p-2 text-dark" href="reset.php">Reset Password</a>
+            
             <?php }?>
+            
+              
+            
         </nav>
         
     </div>

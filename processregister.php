@@ -123,7 +123,7 @@ if($errors){
 }else{
     // count all users
 
-
+        
         $newUserId = ($countAllUsers-1);
 
 
