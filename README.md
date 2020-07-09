@@ -10,5 +10,5 @@
 5. If you want to test Super Admin,These are the details
 
 Email address: Walexy730@gmail.com
-Password: password
+Password: 12345
 

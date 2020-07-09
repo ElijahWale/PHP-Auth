@@ -42,6 +42,7 @@ if($errorCount > 0){
             if($passwordFromUser == $passwordFromDB){
 
                 $_SESSION['loggedIn'] = $userObject->id;
+                $_SESSION['email'] = $userObject->email;
                 $_SESSION['fullName'] = $userObject->firstName . " ". $userObject->lastName;
                 $_SESSION['role'] = $userObject->designation;
                 $_SESSION['department'] = $userObject->department;
@@ -64,6 +65,9 @@ if($errorCount > 0){
     $_SESSION["error"] = "invalid Email or Password";
     header("location:login.php");
     die();
+
+    
+
 }
 
 ?>

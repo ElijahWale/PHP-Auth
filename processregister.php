@@ -1,5 +1,6 @@
 <?php
  session_start();
+ require_once('functions/user.php');
 
 
  function sanitize($data) {
@@ -111,16 +112,18 @@ if(empty($department)){
 
 if($errors){
     $session_error = '<div class="alert alert-danger">' . $errors .'</div>';
-
-    $_SESSION["error"] = $session_error ;
-    header("location:register.php");
+    if($_SESSION['role'] =='Super Admin'){
+        $_SESSION["error"] = $session_error ;
+        header("location:admin/add_user.php");
+    }else{
+        $_SESSION["error"] = $session_error ;
+        header("location:register.php");
+    }
     exit;
 }else{
     // count all users
 
-    $allUsers = scandir("db/users");
-        $countAllUsers = count($allUsers); 
-
+        
         $newUserId = ($countAllUsers-1);
 
 
@@ -138,24 +141,30 @@ if($errors){
     ];
 
     // check if user exists
-    for($i=0;$i < $countAllUsers;$i++){
-        $currentUser = $allUsers[$i];
 
-        if($currentUser == $email . ".json"){
+    $userExists =findUser($email);
+        if($userExists){
             $session_user = '<div class="alert alert-danger">' ." Registration Failed, user already exists" .'</div>';
-
-            $_SESSION["error"] = $session_user;
-            header("location:register.php");
+           
+            if($_SESSION['role'] =='Super Admin'){
+                $_SESSION["error"] = $session_user;
+                header("location:admin/add_user.php");
+            }else{
+                $_SESSION["error"] = $session_user;
+                header("location:register.php");
+             
+            }
             die();
+           
         }
-    }
+    
 
     
     
     // store in the database
 
+    save_user($userObject);
     
-    file_put_contents("db/users/". $email . ".json", json_encode($userObject));
     if($_SESSION['role'] =='Super Admin'){
 
         $_SESSION["message"] ="Your Registration is succesful for  " . $firstName;
